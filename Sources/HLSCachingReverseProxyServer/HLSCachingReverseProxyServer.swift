@@ -197,7 +197,18 @@ open class HLSCachingReverseProxyServer {
         }.joined()
     }
 
+    private func removePattern(for resourceURL: URL) -> String {
+        let pattern = "video/(.*?)/seg"
+        if let range = resourceURL.path.range(of: pattern, options: .regularExpression) {
+            return resourceURL.path.replacingCharacters(in: range, with: "")
+        } else {
+            return resourceURL.absoluteString
+        }
+    }
+
     private func cacheKey(for resourceURL: URL) -> String {
-        return MD5(string: resourceURL.absoluteString)
+        let urlWithoutPattern = removePattern(for: resourceURL)
+        let md5 = MD5(string: urlWithoutPattern)
+        return "\(md5)_\(resourceURL.lastPathComponent)"
     }
 }
