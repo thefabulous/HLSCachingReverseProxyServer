@@ -206,7 +206,7 @@ open class HLSCachingReverseProxyServer {
         }
     }
 
-    private func cacheKey(for resourceURL: URL) -> String {
+    func cacheKey(for resourceURL: URL) -> String {
         let urlWithoutPattern = removePattern(for: resourceURL)
         let md5 = MD5(string: urlWithoutPattern)
         return "\(md5)_\(resourceURL.lastPathComponent)"
