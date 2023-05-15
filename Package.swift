@@ -1,11 +1,11 @@
-// swift-tools-version:5.1
+// swift-tools-version: 5.7
 
 import PackageDescription
 
 let package = Package(
   name: "HLSCachingReverseProxyServer",
   platforms: [
-    .macOS(.v10_11), .iOS(.v9), .tvOS(.v9)
+    .macOS(.v10_13), .iOS(.v11), .tvOS(.v11)
   ],
   products: [
     .library(name: "HLSCachingReverseProxyServer", targets: ["HLSCachingReverseProxyServer"]),
