@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
   name: "HLSCachingReverseProxyServer",
   platforms: [
-    .macOS(.v10_13), .iOS(.v11), .tvOS(.v11)
+    .macOS(.v10_15), .iOS(.v11), .tvOS(.v11)
   ],
   products: [
     .library(name: "HLSCachingReverseProxyServer", targets: ["HLSCachingReverseProxyServer"]),
