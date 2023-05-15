@@ -11,11 +11,10 @@ let package = Package(
     .library(name: "HLSCachingReverseProxyServer", targets: ["HLSCachingReverseProxyServer"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/Quick/Nimble.git", .upToNextMajor(from: "9.0.0")),
     .package(url: "https://github.com/devxoul/SafeCollection.git", .upToNextMajor(from: "3.1.0")),
   ],
   targets: [
     .target(name: "HLSCachingReverseProxyServer"),
-    .testTarget(name: "HLSCachingReverseProxyServerTests", dependencies: ["HLSCachingReverseProxyServer", "Nimble", "SafeCollection"]),
+    .testTarget(name: "HLSCachingReverseProxyServerTests", dependencies: ["HLSCachingReverseProxyServer", "SafeCollection"]),
   ]
 )
