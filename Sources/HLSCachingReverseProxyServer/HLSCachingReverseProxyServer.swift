@@ -10,7 +10,8 @@ open class HLSCachingReverseProxyServer {
     private let cache: PINCaching
 
     private(set) var port: Int?
-    private var transformUrlForCacheKey: ((URL) -> String)?
+
+    open var transformUrlForCacheKey: ((URL) -> String)?
 
     public init(webServer: GCDWebServer, urlSession: URLSession, cache: PINCaching) {
         self.webServer = webServer
@@ -50,12 +51,6 @@ open class HLSCachingReverseProxyServer {
         components.queryItems = (components.queryItems ?? []) + [originURLQueryItem]
 
         return components.url
-    }
-
-    // MARK: Configuration
-
-    open func configureCache(with transformUrlForCacheKey: @escaping ((URL) -> String)) {
-        self.transformUrlForCacheKey = transformUrlForCacheKey
     }
 
 
