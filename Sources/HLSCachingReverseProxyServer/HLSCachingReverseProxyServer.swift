@@ -10,6 +10,7 @@ open class HLSCachingReverseProxyServer {
     private let cache: PINCaching
 
     private(set) var port: Int?
+    private var transformUrlForCacheKey: ((URL) -> String)?
 
     public init(webServer: GCDWebServer, urlSession: URLSession, cache: PINCaching) {
         self.webServer = webServer
@@ -49,6 +50,12 @@ open class HLSCachingReverseProxyServer {
         components.queryItems = (components.queryItems ?? []) + [originURLQueryItem]
 
         return components.url
+    }
+
+    // MARK: Configuration
+
+    open func configureCache(with transformUrlForCacheKey: @escaping ((URL) -> String)) {
+        self.transformUrlForCacheKey = transformUrlForCacheKey
     }
 
 
@@ -197,18 +204,9 @@ open class HLSCachingReverseProxyServer {
         }.joined()
     }
 
-    private func removePattern(for resourceURL: URL) -> String {
-        let pattern = "video/(.*?)/seg"
-        if let range = resourceURL.path.range(of: pattern, options: .regularExpression) {
-            return resourceURL.path.replacingCharacters(in: range, with: "")
-        } else {
-            return resourceURL.absoluteString
-        }
-    }
-
     private func cacheKey(for resourceURL: URL) -> String {
-        let urlWithoutPattern = removePattern(for: resourceURL)
-        let md5 = MD5(string: urlWithoutPattern)
+        let urlString = transformUrlForCacheKey?(resourceURL) ?? resourceURL.absoluteString
+        let md5 = MD5(string: urlString)
         return "\(md5)_\(resourceURL.lastPathComponent)"
     }
 }
