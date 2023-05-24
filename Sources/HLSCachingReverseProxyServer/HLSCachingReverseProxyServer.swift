@@ -11,7 +11,7 @@ open class HLSCachingReverseProxyServer {
 
     private(set) var port: Int?
 
-    open var cacheKeyHandler: ((URL) -> String)?
+    open var cacheKeyHandler: ((URL) -> String?)?
 
     public init(webServer: GCDWebServer, urlSession: URLSession, cache: PINCaching) {
         self.webServer = webServer
