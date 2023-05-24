@@ -11,7 +11,7 @@ open class HLSCachingReverseProxyServer {
 
     private(set) var port: Int?
 
-    open var transformUrlForCacheKey: ((URL) -> String)?
+    open var cacheKeyHandler: ((URL) -> String)?
 
     public init(webServer: GCDWebServer, urlSession: URLSession, cache: PINCaching) {
         self.webServer = webServer
@@ -200,8 +200,6 @@ open class HLSCachingReverseProxyServer {
     }
 
     private func cacheKey(for resourceURL: URL) -> String {
-        let urlString = transformUrlForCacheKey?(resourceURL) ?? resourceURL.absoluteString
-        let md5 = MD5(string: urlString)
-        return "\(md5)_\(resourceURL.lastPathComponent)"
+        cacheKeyHandler?(resourceURL) ?? MD5(string: resourceURL.absoluteString)
     }
 }
