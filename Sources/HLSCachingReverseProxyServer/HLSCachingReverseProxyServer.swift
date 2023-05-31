@@ -9,6 +9,8 @@ open class HLSCachingReverseProxyServer {
     private let urlSession: URLSession
     private let cache: PINCaching
 
+    private let uriPattern = try! NSRegularExpression(pattern: "URI=\"(.*)\"")
+
     private(set) var port: Int?
 
     open var cacheKeyHandler: ((URL) -> String?)?
@@ -148,7 +150,6 @@ open class HLSCachingReverseProxyServer {
     }
 
     private func lineByReplacingURI(line: String, forOriginURL originURL: URL) -> String {
-        let uriPattern = try! NSRegularExpression(pattern: "URI=\"(.*)\"")
         let lineRange = NSMakeRange(0, line.count)
         guard let result = uriPattern.firstMatch(in: line, options: [], range: lineRange) else { return line }
 
